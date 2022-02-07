@@ -15,6 +15,11 @@ import java.awt.event.ActionListener;
 public class VentanaInicial extends JFrame {
 
     //private Header headerProject;
+    public static final String MENSAJE_AYUDA= "Se te presentará una secuencia de palabras, una detrás de otra"
+            + "\ny tendrás que memorizarlas todas. El orden no es importante."
+            + "\nTras la serie de palabras a memorizar, el juego te presentará"
+            + "\nun listado con el doble de palabras. Si la palabra pertenece"
+            + "\nal listado que has memorizado,";
     private ImageIcon titulo;
     private JLabel imagentitulo;
     private JButton salir, nuevoJuego, continuarjuego, comoJugar;
@@ -144,6 +149,10 @@ public class VentanaInicial extends JFrame {
 
             }else if (e.getSource()==continuarjuego){
 
+            }else if(e.getSource()==comoJugar){
+                JOptionPane.showMessageDialog(null,MENSAJE_AYUDA);
+            }else{
+                System.exit(0);
             }
 
         }
