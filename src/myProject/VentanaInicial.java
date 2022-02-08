@@ -8,8 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 
 /**
  * This class is used for ...
@@ -18,14 +17,19 @@ import java.util.Arrays;
  */
 public class VentanaInicial extends JFrame {
 
-    //private Header headerProject;
+    public static final String MENSAJE_AYUDA= "Se te presentará una secuencia de palabras, una detrás de otra"
+                                            + "\ny tendrás que memorizar la mayor cantidad de estas posibles."
+                                            + "\nTras la serie de palabras a memorizar, el juego te presentará"
+                                            + "\nun listado con el doble de palabras y deberás marcar si esta "
+                                            + "\no no en el listado inicial, debiendo acertar un determinado "
+                                            + "\nnumero de palabras dependiendo el nivel.";
+
+
     private ImageIcon titulo;
     private JLabel imagentitulo;
     private FileManager fileManager;
     private JButton salir, nuevoJuego, continuarjuego, comoJugar;
     private Escucha escucha;
-    //private JComboBox comboBox;
-    //private VentanaDejuego ventanaDejuego = new VentanaDejuego();
     private VentanaInicial ventanaInicial=this;
     private Jugadores jugador;
 
@@ -38,7 +42,6 @@ public class VentanaInicial extends JFrame {
 
         //Default JFrame configuration
         this.setTitle("I know that word");
-        //this.setSize(500,350);
         this.pack();
         this.setResizable(false);
         this.setVisible(true);
@@ -91,20 +94,6 @@ public class VentanaInicial extends JFrame {
 
 
         //boton continuar
-        /*comboBox = new JComboBox<String>();
-        comboBox.addItemListener(escucha);
-        comboBox.setPreferredSize(new Dimension(110, 30));
-        comboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        //comboBox.setBorder(new EmptyBorder(100, 0, 100, 0));
-        for (int i=0; i < fileManager.jugadoreslecturaFile().size(); i++) {
-            comboBox.addItem(fileManager.jugadoreslecturaFile().get(i));
-        }
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        constraints.gridwidth = 1;
-        constraints.fill = GridBagConstraints.NONE;
-        constraints.anchor = GridBagConstraints.CENTER;
-        add(comboBox, constraints);*/
         continuarjuego = new JButton("Continuar");
         continuarjuego.addActionListener(escucha);
         continuarjuego.setPreferredSize(new Dimension(110, 30));
@@ -166,13 +155,14 @@ public class VentanaInicial extends JFrame {
         });
     }
 
+
+
     /**
      * inner class that extends an Adapter Class or implements Listeners used by GUI class
      */
     private class Escucha implements ActionListener, ItemListener{
 
-
-
+        IconNiveles iconNiveles = new IconNiveles();
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -206,6 +196,7 @@ public class VentanaInicial extends JFrame {
                 ventanaInicial.dispose();
 
             }else if (e.getSource()==comoJugar) {
+                JOptionPane.showMessageDialog(null, MENSAJE_AYUDA, "Como jugar", JOptionPane.DEFAULT_OPTION, iconNiveles);
 
             }else{
                 System.exit(0);
