@@ -6,6 +6,10 @@ import javax.swing.plaf.basic.BasicBorders;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * This class is used for ...
@@ -17,8 +21,14 @@ public class VentanaInicial extends JFrame {
     //private Header headerProject;
     private ImageIcon titulo;
     private JLabel imagentitulo;
+    private FileManager fileManager;
     private JButton salir, nuevoJuego, continuarjuego, comoJugar;
     private Escucha escucha;
+    //private JComboBox comboBox;
+    //private VentanaDejuego ventanaDejuego = new VentanaDejuego();
+    private VentanaInicial ventanaInicial=this;
+    private Jugadores jugador;
+
 
     /**
      * Constructor of GUI class
@@ -27,7 +37,7 @@ public class VentanaInicial extends JFrame {
         initGUI();
 
         //Default JFrame configuration
-        this.setTitle("The Title app");
+        this.setTitle("I know that word");
         //this.setSize(500,350);
         this.pack();
         this.setResizable(false);
@@ -47,6 +57,10 @@ public class VentanaInicial extends JFrame {
 
         //Create Listener Object and Control Object
         escucha= new Escucha();
+        fileManager = new FileManager();
+
+
+
 
         //color Jframe
         this.getContentPane().setBackground(new Color(192,255,240));
@@ -77,16 +91,35 @@ public class VentanaInicial extends JFrame {
 
 
         //boton continuar
+        /*comboBox = new JComboBox<String>();
+        comboBox.addItemListener(escucha);
+        comboBox.setPreferredSize(new Dimension(110, 30));
+        comboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        //comboBox.setBorder(new EmptyBorder(100, 0, 100, 0));
+        for (int i=0; i < fileManager.jugadoreslecturaFile().size(); i++) {
+            comboBox.addItem(fileManager.jugadoreslecturaFile().get(i));
+        }
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        constraints.gridwidth = 1;
+        constraints.fill = GridBagConstraints.NONE;
+        constraints.anchor = GridBagConstraints.CENTER;
+        add(comboBox, constraints);*/
         continuarjuego = new JButton("Continuar");
         continuarjuego.addActionListener(escucha);
         continuarjuego.setPreferredSize(new Dimension(110, 30));
-        continuarjuego.setCursor(new Cursor(Cursor.HAND_CURSOR));
         continuarjuego.setBorder(new EmptyBorder(100, 0, 100, 0));
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
         constraints.fill = GridBagConstraints.NONE;
         constraints.anchor = GridBagConstraints.CENTER;
+        if (fileManager.jugadoreslecturaFile().isEmpty()){
+            continuarjuego.setEnabled(false);
+        }else{
+            continuarjuego.setEnabled(true);
+            continuarjuego.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        }
         add(continuarjuego, constraints);
 
 
@@ -102,6 +135,7 @@ public class VentanaInicial extends JFrame {
         constraints.fill = GridBagConstraints.NONE;
         constraints.anchor = GridBagConstraints.CENTER;
         add(comoJugar, constraints);
+
 
 
         //boton salir
@@ -135,16 +169,54 @@ public class VentanaInicial extends JFrame {
     /**
      * inner class that extends an Adapter Class or implements Listeners used by GUI class
      */
-    private class Escucha implements ActionListener {
+    private class Escucha implements ActionListener, ItemListener{
+
+
+
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource()==nuevoJuego){
-                JOptionPane.showMessageDialog(null,"inicias nuevo juego");
+            if (e.getSource()==nuevoJuego) {
+                String name = JOptionPane.showInputDialog("Escribe tu nickname: ");
+                if (name != null ) {
+                    fileManager.escribirTexto(name);
 
-            }else if (e.getSource()==continuarjuego){
+                    VentanaDejuego ventanaDejuego = new VentanaDejuego();
+                    ventanaDejuego.setVisible(true);
+                    ventanaInicial.dispose();
+                }else{
+                    String confirmarNombre = JOptionPane.showInputDialog("Necesitas un nombre: ");
+                    fileManager.escribirTexto(confirmarNombre);
 
+                    VentanaDejuego ventanaDejuego = new VentanaDejuego();
+                    ventanaDejuego.setVisible(true);
+                    ventanaInicial.dispose();
+                }
+            }else if (e.getSource()==continuarjuego) {
+                jugador = new Jugadores();
+
+                String nombres = (String) JOptionPane.showInputDialog(null, "Selecciona tu nombre", "Iniciar",
+                        JOptionPane.QUESTION_MESSAGE, null,
+                        fileManager.jugadoreslecturaFile().toArray(), fileManager.jugadoreslecturaFile().toArray()[0]);
+
+
+
+                VentanaDejuego ventanaDejuego = new VentanaDejuego();
+                ventanaDejuego.setVisible(true);
+                ventanaInicial.dispose();
+
+            }else if (e.getSource()==comoJugar) {
+
+            }else{
+                System.exit(0);
             }
+
+        }
+
+
+
+        @Override
+        public void itemStateChanged(ItemEvent e) {
 
         }
     }
