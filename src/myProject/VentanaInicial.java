@@ -32,6 +32,7 @@ public class VentanaInicial extends JFrame {
     private Escucha escucha;
     private VentanaInicial ventanaInicial=this;
     private Jugadores jugador;
+    private Control control;
 
 
     /**
@@ -59,8 +60,9 @@ public class VentanaInicial extends JFrame {
         GridBagConstraints constraints = new GridBagConstraints();
 
         //Create Listener Object and Control Object
-        escucha= new Escucha();
+        escucha = new Escucha();
         fileManager = new FileManager();
+        control = new Control();
 
 
 
@@ -160,7 +162,7 @@ public class VentanaInicial extends JFrame {
     /**
      * inner class that extends an Adapter Class or implements Listeners used by GUI class
      */
-    private class Escucha implements ActionListener, ItemListener{
+    private class Escucha implements ActionListener{
 
         IconNiveles iconNiveles = new IconNiveles();
 
@@ -168,33 +170,52 @@ public class VentanaInicial extends JFrame {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource()==nuevoJuego) {
                 String name = JOptionPane.showInputDialog("Escribe tu nickname: ");
-                if (name != null ) {
+
+                if (name == null ) { //si presiono cancelar en el joptionPane reinicia ventana inicial
+                    VentanaInicial.main(null);
+                    ventanaInicial.dispose();
+
+                }else if (name.equals("")) { //si no introdujo nombre
+
+                    if (name.equals("")){//si de nuevo no introdujo nombre
+                        name = JOptionPane.showInputDialog("Necesitas un nombre para contiuar: ");
+
+                        while (name.equals("")) {//mientras no introduzca nombre, pide nombre
+                            name = JOptionPane.showInputDialog("Necesitas un nombre para contiuar: ");
+                        }
+
+                            //cuando lo introduzca, escribe el nombre del jugador muestra ventana de juego y elimina ventana inicial
+                            fileManager.escribirTexto(name);
+                            VentanaDejuego ventanaDejuego = new VentanaDejuego();
+                            ventanaDejuego.setVisible(true);
+
+                        }else if (name==null){//si da a cancelar reinicia ventana inicial
+                            VentanaInicial.main(null);
+                        }
+                    ventanaInicial.dispose();
+
+                }else{//introdujo nombre, escribe el nombre del jugador muestra ventana de juego y elimina ventana inicial
+
                     fileManager.escribirTexto(name);
-
                     VentanaDejuego ventanaDejuego = new VentanaDejuego();
                     ventanaDejuego.setVisible(true);
                     ventanaInicial.dispose();
-                }else{
-                    String confirmarNombre = JOptionPane.showInputDialog("Necesitas un nombre: ");
-                    fileManager.escribirTexto(confirmarNombre);
 
-                    VentanaDejuego ventanaDejuego = new VentanaDejuego();
-                    ventanaDejuego.setVisible(true);
-                    ventanaInicial.dispose();
                 }
             }else if (e.getSource()==continuarjuego) {
                 jugador = new Jugadores();
-
                 String nombres = (String) JOptionPane.showInputDialog(null, "Selecciona tu nombre", "Iniciar",
                         JOptionPane.QUESTION_MESSAGE, null,
                         fileManager.jugadoreslecturaFile().toArray(), fileManager.jugadoreslecturaFile().toArray()[0]);
 
+                if (nombres == null ) {
+                    VentanaInicial.main(null);
+                } else {
 
-
-                VentanaDejuego ventanaDejuego = new VentanaDejuego();
-                ventanaDejuego.setVisible(true);
+                    VentanaDejuego ventanaDejuego = new VentanaDejuego();
+                    ventanaDejuego.setVisible(true);
+                }
                 ventanaInicial.dispose();
-
             }else if (e.getSource()==comoJugar) {
                 JOptionPane.showMessageDialog(null, MENSAJE_AYUDA, "Como jugar", JOptionPane.DEFAULT_OPTION, iconNiveles);
 
@@ -204,11 +225,6 @@ public class VentanaInicial extends JFrame {
 
         }
 
-
-
-        @Override
-        public void itemStateChanged(ItemEvent e) {
-
-        }
     }
+
 }

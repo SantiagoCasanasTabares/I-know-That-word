@@ -6,7 +6,7 @@ public class Jugadores extends FileManager {
 
     public Jugadores(){
         name = "";
-        level = 0;
+        level = 1;
 
     }
 
