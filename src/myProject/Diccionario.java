@@ -10,6 +10,8 @@ public class Diccionario {
     private ArrayList<String> palabrasTotales;
 
     public Diccionario() {
+        palabrasCorrectas = new ArrayList<String>();
+        palabrasTotales = new ArrayList<String>();
         FileManager fileManager = new FileManager();
         diccionario = fileManager.lecturaFile();
     }

@@ -39,7 +39,7 @@ public class VentanaDejuego extends JFrame {
 
         //escucha and control class
         escucha = new Escucha();
-        timer1 = new Timer(5000, escucha);
+        timer1 = new Timer(1000, escucha);
         timer2 = new Timer(7000, escucha);
         control = new Control();
 
@@ -55,7 +55,7 @@ public class VentanaDejuego extends JFrame {
         TitledBorder titledBorderPalabra = BorderFactory.createTitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION);
         palabraPanel.setBorder(titledBorderPalabra);
         titledBorderPalabra.setTitleColor(Color.black);
-        palabraPanel.addMouseListener(escucha);
+        iniciar.addMouseListener(escucha);
         palabraPanel.setOpaque(false);
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -97,19 +97,35 @@ public class VentanaDejuego extends JFrame {
     }
 
     private class Escucha extends MouseAdapter implements ActionListener {
+        String palabra = "";
+        int i=0;
 
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            if (e.getSource() == timer1) {
+                if(i<control.getWords().size()){
+                    //System.out.println(control.palabraArecordar());
+                    iniciar.setIcon(null);
+                    palabra = control.getWords().get(i);
+                    iniciar.setText(palabra);
+                    System.out.println(palabra);
+                    i++;
+                }else{
+                    timer1.stop();
+                    System.out.println("ñ");
+                }
+            }
 
         }
 
         @Override
         public void mouseClicked(MouseEvent e) {
-
-            if (e.getSource()==iniciar) {
-
+            if(e.getSource()==iniciar) {
+                control.aumentarPalabras();
+                control.setPalabrasInicial();
+                control.setPalabrasTotales();
+                timer1.start();
             }
 
         }
