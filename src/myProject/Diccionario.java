@@ -1,6 +1,7 @@
 package myProject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class Diccionario {
@@ -10,6 +11,8 @@ public class Diccionario {
     private ArrayList<String> palabrasTotales;
 
     public Diccionario() {
+        palabrasCorrectas = new ArrayList<String>();
+        palabrasTotales = new ArrayList<String>();
         FileManager fileManager = new FileManager();
         diccionario = fileManager.lecturaFile();
     }
@@ -48,7 +51,7 @@ public class Diccionario {
         int i = palabrasTotales.size()-1;
         //entero en el tamaño de la lis ta-1 para que al sumar una arranque en la posicion que se debe poner la nueva palabra de la lista
 
-        while (i < totalPalaNivel) {
+        while (i < totalPalaNivel-1) {
             String nuevaPalabra = getFrase();//obtiene nueva palabra
             i++;//suma uno en la posicion
             if (!palabrasTotales.contains(nuevaPalabra)) {
@@ -57,7 +60,7 @@ public class Diccionario {
                 i--;//si la contiene, vuelve a restar el i en uno y empieza de nuevo;
             }
         }
-
+        Collections.shuffle(palabrasTotales);
         return palabrasTotales;
     }
 

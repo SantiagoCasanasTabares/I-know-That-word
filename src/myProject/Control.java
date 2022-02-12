@@ -34,7 +34,6 @@ public class Control {
      *
      */
     public String palabrasTotales(){
-        Collections.shuffle(totalWords);
         for (int i=0; i < totalWords.size();i++){
             palabraFinal = totalWords.get(i);
         }

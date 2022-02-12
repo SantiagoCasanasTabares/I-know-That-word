@@ -12,7 +12,7 @@ public class FileManager {
     private BufferedWriter output;
 
 
-
+    //obtener array con las palabras
     public ArrayList<String> lecturaFile() {
         ArrayList<String> frases = new ArrayList<String>();
 
@@ -38,6 +38,8 @@ public class FileManager {
         return frases;
     }
 
+
+    //escribir los nombres de los jugadores
     public void escribirTexto(String linea){
         try {
             fileWriter = new FileWriter(PATHJUGADORES,true);
@@ -56,7 +58,7 @@ public class FileManager {
     }
 
 
-    //
+    //obtener array con lo jugadores
     public ArrayList<String> jugadoreslecturaFile() {
         ArrayList<String> jugadores = new ArrayList<String>();
 
