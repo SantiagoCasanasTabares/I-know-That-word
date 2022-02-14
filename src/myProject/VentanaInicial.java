@@ -31,8 +31,8 @@ public class VentanaInicial extends JFrame {
     private JButton salir, nuevoJuego, continuarjuego, comoJugar;
     private Escucha escucha;
     private VentanaInicial ventanaInicial=this;
-    private Jugadores jugador;
-    private Control control;
+
+
 
 
     /**
@@ -62,7 +62,6 @@ public class VentanaInicial extends JFrame {
         //Create Listener Object and Control Object
         escucha = new Escucha();
         fileManager = new FileManager();
-        control = new Control();
 
 
 
@@ -184,9 +183,10 @@ public class VentanaInicial extends JFrame {
                             name = JOptionPane.showInputDialog("Necesitas un nombre para contiuar: ");
                         }
 
+                        System.out.println("cy");
                             //cuando lo introduzca, escribe el nombre del jugador muestra ventana de juego y elimina ventana inicial
-                            fileManager.escribirTexto(name);
-                            VentanaDejuego ventanaDejuego = new VentanaDejuego();
+                            fileManager.escribirTexto(name+":"+3);
+                            VentanaDejuego ventanaDejuego = new VentanaDejuego(1, name);
                             ventanaDejuego.setVisible(true);
 
                         }else if (name==null){//si da a cancelar reinicia ventana inicial
@@ -196,14 +196,13 @@ public class VentanaInicial extends JFrame {
 
                 }else{//introdujo nombre, escribe el nombre del jugador muestra ventana de juego y elimina ventana inicial
 
-                    fileManager.escribirTexto(name);
-                    VentanaDejuego ventanaDejuego = new VentanaDejuego();
+                    fileManager.escribirTexto(name+":"+3);
+                    VentanaDejuego ventanaDejuego = new VentanaDejuego(1, name);
                     ventanaDejuego.setVisible(true);
                     ventanaInicial.dispose();
 
                 }
             }else if (e.getSource()==continuarjuego) {
-                jugador = new Jugadores();
                 String nombres = (String) JOptionPane.showInputDialog(null, "Selecciona tu nombre", "Iniciar",
                         JOptionPane.QUESTION_MESSAGE, null,
                         fileManager.jugadoreslecturaFile().toArray(), fileManager.jugadoreslecturaFile().toArray()[0]);
@@ -212,7 +211,10 @@ public class VentanaInicial extends JFrame {
                     VentanaInicial.main(null);
                 } else {
 
-                    VentanaDejuego ventanaDejuego = new VentanaDejuego();
+                    Jugadores jugadores = new Jugadores(nombres);
+                    int nivel = jugadores.getLevel();
+
+                    VentanaDejuego ventanaDejuego = new VentanaDejuego(nivel, jugadores.getName());
                     ventanaDejuego.setVisible(true);
                 }
                 ventanaInicial.dispose();

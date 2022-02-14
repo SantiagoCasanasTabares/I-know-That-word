@@ -1,7 +1,7 @@
 package myProject;
 
 import java.util.ArrayList;
-import java.util.Collections;
+
 
 public class Control {
     private Diccionario diccionario;
@@ -9,11 +9,13 @@ public class Control {
     private int puntos, palabrasAMemorizar,palabrasDelNivel, nivel;
     private String palabraARecordar, palabraFinal;
     private boolean acierto;
+    private Jugadores jugadores;
 
-    public Control(){
+    public Control(String name){
+        jugadores = new Jugadores(name);
         diccionario = new Diccionario();
         puntos=0;
-        nivel=1;
+        nivel=0;
         words = new ArrayList<String>();
         totalWords = new ArrayList<String>();
     }
@@ -56,6 +58,7 @@ public class Control {
                 }
             }else{
                 acierto=true;
+                puntos++;
             }
         }
         return acierto;
@@ -123,9 +126,9 @@ public class Control {
      * @return puntos
      */
     public int getPuntos() {
-        if (acierto==true){
+        /*if (acierto==true){
             puntos++;
-        }
+        }*/
         return puntos;
     }
 
@@ -145,8 +148,8 @@ public class Control {
         return totalWords;
     }
 
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
+    public void setNivel() {
+        this.nivel = jugadores.getLevel();
     }
 
     public int getNivel() {
