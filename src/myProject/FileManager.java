@@ -84,6 +84,28 @@ public class FileManager {
         return jugadores;
     }
 
+    //modificar array de jugadores para poner el nuevo nivel a un usuario determinado
+    public void actualizarNivel( int nivel, int posicion){
+        try {
+            ArrayList<String> jugadoresActulizar = jugadoreslecturaFile();
+            String usuarioAntiguo = jugadoresActulizar.get(posicion);
+            String usuarioActualizado = usuarioAntiguo.substring(0, usuarioAntiguo.lastIndexOf(":")+1) +  nivel;
+            jugadoresActulizar.remove(posicion);
+            jugadoresActulizar.add(posicion,usuarioActualizado);
+            fileWriter = new FileWriter(PATHJUGADORES,false);
+            output = new BufferedWriter(fileWriter);
+            for (int i=0;i<jugadoresActulizar.size();i++){
+                output.write(jugadoresActulizar.get(i));
+                output.newLine();
 
-
+            }
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
+
+
+

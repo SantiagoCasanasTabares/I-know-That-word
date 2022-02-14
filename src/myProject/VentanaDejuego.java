@@ -13,16 +13,19 @@ public class VentanaDejuego extends JFrame {
     private ImageIcon initOption, continueOption, yesOption, noOption;
     private JLabel iniciar, continuar, si, no;
     private JPanel palabraPanel, siPanel, noPanel;
-    private MouseAdapter mouseListener;
     private JButton salir;
     private Timer timer1, timer2;
     private Escucha escucha;
     private Jugadores jugadores;
     private Control control;
+    int nivel;
+    String nombre;
+    FileManager fileManager;
 
-    public VentanaDejuego() {
+    public VentanaDejuego(int level, String namePlayer) {
         initGUI();
-
+        this.nivel = level;
+        this.nombre = namePlayer;
         //Default JFrame configuration
         this.setTitle("I know that word");
         this.pack();
@@ -41,10 +44,12 @@ public class VentanaDejuego extends JFrame {
         this.getContentPane().setBackground(new Color(192,255,240));
 
         //escucha and control class
+        fileManager = new FileManager();
+        jugadores = new Jugadores(nombre);
         escucha = new Escucha();
-        timer1 = new Timer(500, escucha);
-        timer2 = new Timer(700, escucha);
-        control = new Control();
+        timer1 = new Timer(1000, escucha);
+        timer2 = new Timer(3000, escucha);
+        control = new Control(nombre);
 
         //configuracion de elementos
 
@@ -69,7 +74,7 @@ public class VentanaDejuego extends JFrame {
         siPanel = new JPanel();
         yesOption = new ImageIcon(getClass().getResource("/Resources/si.png"));
         si = new JLabel(yesOption);
-        si.addMouseListener(escucha);
+
         siPanel.add(si, BorderLayout.CENTER);
         siPanel.setPreferredSize(new Dimension(175, 100));
         TitledBorder titledBorderSi = BorderFactory.createTitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION);
@@ -90,7 +95,7 @@ public class VentanaDejuego extends JFrame {
         TitledBorder titledBorderNo = BorderFactory.createTitledBorder(new EtchedBorder(EtchedBorder.LOWERED), "", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION);
         noPanel.setBorder(titledBorderNo);
         titledBorderNo.setTitleColor(Color.black);
-        no.addMouseListener(escucha);
+
         noPanel.setOpaque(false);
         constraints.gridx = 1;
         constraints.gridy = 1;
@@ -108,6 +113,7 @@ public class VentanaDejuego extends JFrame {
         String palabra = "";
         int i = 0;
 
+
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -119,33 +125,39 @@ public class VentanaDejuego extends JFrame {
                     palabra = control.getWords().get(i);
                     iniciar.setText(palabra);
                     iniciar.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-                    System.out.println(palabra);
+                    //System.out.println(palabra);
                     i++;
                 }else{
                     timer1.stop();
-                    palabraPanel.removeAll();
                     System.out.println("----------------------------------------------------");
                     //timer2.start();
                     i=0;
-
+                    iniciar.setVisible(false);
+                    palabraPanel.remove(iniciar);
                     continuar.addMouseListener(escucha);
                     continuar.setCursor(new Cursor(Cursor.HAND_CURSOR));
                     palabraPanel.add(continuar, BorderLayout.CENTER);
 
                 }
 
-            }if (e.getSource() == timer2) {
+            }else if (e.getSource() == timer2) {
+                fileManager.actualizarNivel(1, 0);
+                si.addMouseListener(escucha);
+                si.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                no.addMouseListener(escucha);
+                no.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
                 if (i <control.getTotalWords().size()) {
-                    iniciar.setIcon(null);
+                    continuar.setIcon(null);
                     palabra = control.getTotalWords().get(i);
-                    iniciar.setText(palabra);
-                    iniciar.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-                    System.out.println(palabra);
+                    continuar.setText(palabra);
+                    continuar.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
+                    //System.out.println(palabra);
                     i++;
-                }else {
+                }else{
                     timer2.stop();
                     System.out.println("ño");
+
                 }
             }
 
@@ -155,6 +167,9 @@ public class VentanaDejuego extends JFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.getSource() == iniciar) {
+                control.setNivel();
+                System.out.println(jugadores.getLevel());
+                System.out.println(control.getNivel());
                 control.aumentarPalabras();
                 control.setPalabrasInicial();
                 control.setPalabrasTotales();
@@ -163,6 +178,16 @@ public class VentanaDejuego extends JFrame {
 
             }else if (e.getSource()==continuar){
                 timer2.start();
+                continuar.setCursor(null);
+
+            }else if (e.getSource()==si) {
+
+                control.validarPalabra(true, true);
+
+            }else if (e.getSource()==no) {
+
+                control.validarPalabra(true, false);
+
             }
         }
     }
