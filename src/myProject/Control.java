@@ -8,7 +8,7 @@ public class Control {
     private ArrayList<String> words, totalWords;
     private int puntos, palabrasAMemorizar,palabrasDelNivel, nivel;
     private String palabraARecordar, palabraFinal;
-    private boolean acierto;
+    private ArrayList<Boolean> aciertos;
 
     public Control(){
         diccionario = new Diccionario();
@@ -16,6 +16,7 @@ public class Control {
         nivel=1;
         words = new ArrayList<String>();
         totalWords = new ArrayList<String>();
+        aciertos = new ArrayList<Boolean>();
     }
 
     /**
@@ -44,15 +45,11 @@ public class Control {
      * compara una palabra de las palabras totales del nivel con alguna de las palabras a recordar, para verificar si acerto o no.
      * @return acierto
      */
-    public boolean validarPalabra(){
+    public ArrayList<Boolean> validarPalabra(){
         for (String element: totalWords){
-            if(words.contains(element)){
-                acierto=true;
-            }else{
-                acierto=false;
-            }
+            aciertos.add(words.contains(element));
         }
-        return acierto;
+        return aciertos;
     }
 
     /**
@@ -96,7 +93,7 @@ public class Control {
     /**
      *
      */
-    public void siguienteNivel(){
+    /*public void siguienteNivel(){
         if((nivel==1 || nivel==2) && getPuntos()==(palabrasDelNivel*0.7)){
             nivel++;
         }else if(nivel==3 && getPuntos()==Math.round(palabrasDelNivel*0.75)){
@@ -110,18 +107,18 @@ public class Control {
         }else if(nivel==9 && getPuntos()==(palabrasDelNivel*0.95)){
             nivel++;
         }
-    }
+    }*/
 
     /**
      * devuelve la cantidad de puntos dependiendo de los aciertos del jugador
      * @return puntos
      */
-    public int getPuntos() {
+    /*public int getPuntos() {
         if (acierto==true){
             puntos++;
         }
         return puntos;
-    }
+    }*/
 
     public void setPalabrasInicial() {
         words = diccionario.getPalabrasRecordar(palabrasAMemorizar);

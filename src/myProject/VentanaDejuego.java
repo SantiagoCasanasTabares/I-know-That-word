@@ -44,8 +44,8 @@ public class VentanaDejuego extends JFrame {
 
         //escucha and control class
         escucha = new Escucha();
-        timer1 = new Timer(500, escucha);
-        timer2 = new Timer(700, escucha);
+        timer1 = new Timer(1000, escucha);
+        timer2 = new Timer(2000, escucha);
         control = new Control(/*nombre*/);
 
         //configuracion de elementos
@@ -109,6 +109,7 @@ public class VentanaDejuego extends JFrame {
     private class Escucha extends MouseAdapter implements ActionListener {
         String palabra = "";
         int i = 0;
+        int j=0;
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -121,12 +122,10 @@ public class VentanaDejuego extends JFrame {
                     palabra = control.getWords().get(i);
                     iniciar.setText(palabra);
                     iniciar.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-                    //System.out.println(palabra);
                     i++;
                 }else{
                     timer1.stop();
                     System.out.println("----------------------------------------------------");
-                    //timer2.start();
                     i=0;
                     iniciar.setVisible(false);
                     palabraPanel.remove(iniciar);
@@ -135,29 +134,19 @@ public class VentanaDejuego extends JFrame {
                     palabraPanel.add(continuar, BorderLayout.CENTER);
 
                 }
-
             }else if (e.getSource() == timer2) {
-                si.addMouseListener(escucha);
-                si.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                no.addMouseListener(escucha);
-                no.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
                 if (i <control.getTotalWords().size()) {
                     continuar.setIcon(null);
                     palabra = control.getTotalWords().get(i);
                     continuar.setText(palabra);
                     continuar.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-                    //System.out.println(palabra);
                     i++;
                 }else{
                     timer2.stop();
-                    System.out.println("ño");
-
                 }
             }
 
         }
-
 
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -171,26 +160,29 @@ public class VentanaDejuego extends JFrame {
             }else if (e.getSource()==continuar){
                 timer2.start();
                 continuar.setCursor(null);
-
-
-                for(String element: control.getTotalWords()) {
-                    if(control.getWords().contains(element)){
-                        System.out.println("cy");
-                    }else{
-                        System.out.println("ño");
-                    }
-                }
-
+                System.out.println(control.validarPalabra());
+                si.addMouseListener(escucha);
+                si.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                no.addMouseListener(escucha);
+                no.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                /*System.out.println(control.getWords());
+                System.out.println(control.getTotalWords());
+                System.out.println("---------------------");*/
             }else if (e.getSource()==si) {
-                if(control.validarPalabra()==true){
+                if(control.validarPalabra().get(j)==true){
+                    System.out.println("k pro");
+                }else {
+                    System.out.println("k noob");
+                }
+                j++;
+            }else if (e.getSource()==no) {
+                if(control.validarPalabra().get(j)==false){
                     System.out.println("k pro");
                 }else{
                     System.out.println("k noob");
                 }
-            }else if (e.getSource()==no) {
-                System.out.println("ñ");
+                j++;
             }
         }
     }
-
 }
