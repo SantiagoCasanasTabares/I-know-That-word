@@ -1,6 +1,7 @@
 package myProject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class Diccionario {
@@ -59,7 +60,7 @@ public class Diccionario {
                 i--;//si la contiene, vuelve a restar el i en uno y empieza de nuevo;
             }
         }
-
+        Collections.shuffle(palabrasTotales);
         return palabrasTotales;
     }
 

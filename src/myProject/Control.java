@@ -34,7 +34,6 @@ public class Control {
      *
      */
     public String palabrasTotales(){
-        Collections.shuffle(totalWords);
         for (int i=0; i < totalWords.size();i++){
             palabraFinal = totalWords.get(i);
         }
@@ -45,18 +44,12 @@ public class Control {
      * compara una palabra de las palabras totales del nivel con alguna de las palabras a recordar, para verificar si acerto o no.
      * @return acierto
      */
-    public boolean validarPalabra(Boolean clicked, Boolean pertenece){
-        if(clicked==true){
-            if(pertenece==true){
-                for (int i=0; i < totalWords.size();i++){
-                    if( words.contains(totalWords.get(i))){
-                        acierto=true;
-                    }else{
-                        acierto=false;
-                    }
-                }
-            }else{
+    public boolean validarPalabra(){
+        for (String element: totalWords){
+            if(words.contains(element)){
                 acierto=true;
+            }else{
+                acierto=false;
             }
         }
         return acierto;
