@@ -47,8 +47,8 @@ public class VentanaDejuego extends JFrame {
         fileManager = new FileManager();
         jugadores = new Jugadores(nombre);
         escucha = new Escucha();
-        timer1 = new Timer(1000, escucha);
-        timer2 = new Timer(3000, escucha);
+        timer1 = new Timer(500, escucha);
+        timer2 = new Timer(800, escucha);
         control = new Control(nombre);
 
         //configuracion de elementos
@@ -112,6 +112,7 @@ public class VentanaDejuego extends JFrame {
     private class Escucha extends MouseAdapter implements ActionListener {
         String palabra = "";
         int i = 0;
+        int j = 0;
 
 
         @Override
@@ -119,18 +120,15 @@ public class VentanaDejuego extends JFrame {
 
 
             if (e.getSource() == timer1) {
-
+                System.out.println("cy");
                 if (i <control.getWords().size()) {
                     iniciar.setIcon(null);
                     palabra = control.getWords().get(i);
                     iniciar.setText(palabra);
                     iniciar.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-                    //System.out.println(palabra);
                     i++;
                 }else{
                     timer1.stop();
-                    System.out.println("----------------------------------------------------");
-                    //timer2.start();
                     i=0;
                     iniciar.setVisible(false);
                     palabraPanel.remove(iniciar);
@@ -141,23 +139,15 @@ public class VentanaDejuego extends JFrame {
                 }
 
             }else if (e.getSource() == timer2) {
-                fileManager.actualizarNivel(1, 0);
-                si.addMouseListener(escucha);
-                si.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                no.addMouseListener(escucha);
-                no.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-                if (i <control.getTotalWords().size()) {
+                if (i < control.getTotalWords().size()) {
                     continuar.setIcon(null);
                     palabra = control.getTotalWords().get(i);
                     continuar.setText(palabra);
                     continuar.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-                    //System.out.println(palabra);
                     i++;
                 }else{
                     timer2.stop();
-                    System.out.println("ño");
-
                 }
             }
 
@@ -168,8 +158,6 @@ public class VentanaDejuego extends JFrame {
         public void mouseClicked(MouseEvent e) {
             if (e.getSource() == iniciar) {
                 control.setNivel();
-                System.out.println(jugadores.getLevel());
-                System.out.println(control.getNivel());
                 control.aumentarPalabras();
                 control.setPalabrasInicial();
                 control.setPalabrasTotales();
@@ -179,17 +167,32 @@ public class VentanaDejuego extends JFrame {
             }else if (e.getSource()==continuar){
                 timer2.start();
                 continuar.setCursor(null);
+                si.addMouseListener(escucha);
+                si.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                no.addMouseListener(escucha);
+                no.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
             }else if (e.getSource()==si) {
-
-                control.validarPalabra(true, true);
-
+                if(control.validarPalabra().get(j)==true){
+                    control.sumarPuntos(true);
+                    System.out.println("k pro , puntos = "+control.getPuntos());
+                }else {
+                    control.sumarPuntos(false);
+                    System.out.println("k noob, puntos = "+control.getPuntos());
+                }
+                j++;
             }else if (e.getSource()==no) {
-
-                control.validarPalabra(true, false);
-
+                if(control.validarPalabra().get(j)==false){
+                    control.sumarPuntos(true);
+                    System.out.println("k pro , puntos = "+control.getPuntos());
+                }else{
+                    control.sumarPuntos(false);
+                    System.out.println("k noob, puntos = "+control.getPuntos());
+                }
+                j++;
             }
         }
+
     }
 
 }
