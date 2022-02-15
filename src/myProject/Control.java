@@ -8,97 +8,76 @@ public class Control {
     private ArrayList<String> words, totalWords;
     private int puntos, palabrasAMemorizar,palabrasDelNivel, nivel;
     private String palabraARecordar, palabraFinal;
-    private boolean acierto;
     private Jugadores jugadores;
-
+    private ArrayList<Boolean> aciertos;
     public Control(String name){
         jugadores = new Jugadores(name);
         diccionario = new Diccionario();
         puntos=0;
-        nivel=0;
+        nivel = 0;
         words = new ArrayList<String>();
         totalWords = new ArrayList<String>();
+        aciertos = new ArrayList<Boolean>();
     }
 
-    /**
-     * nos devuelve una palabra de las palabras a recordar
-     * @return palabra
-     */
-    public String palabraArecordar(){
-        for(int i=0; i < words.size(); i++){
-            palabraARecordar = words.get(i);
-        }
-        return palabraARecordar;
-    }
-
-    /**
-     *
-     *
-     */
-    public String palabrasTotales(){
-        for (int i=0; i < totalWords.size();i++){
-            palabraFinal = totalWords.get(i);
-        }
-        return palabraFinal;
-    }
 
     /**
      * compara una palabra de las palabras totales del nivel con alguna de las palabras a recordar, para verificar si acerto o no.
      * @return acierto
      */
-    public boolean validarPalabra(Boolean clicked, Boolean pertenece){
-        if(clicked==true){
-            if(pertenece==true){
-                for (int i=0; i < totalWords.size();i++){
-                    if( words.contains(totalWords.get(i))){
-                        acierto=true;
-                    }else{
-                        acierto=false;
-                    }
-                }
-            }else{
-                acierto=true;
-                puntos++;
-            }
+    public ArrayList<Boolean> validarPalabra(){
+        for (String element: totalWords){
+            aciertos.add(words.contains(element));
         }
-        return acierto;
+        return aciertos;
     }
+
 
     /**
      * Aumenta el numero de palabras a recordar y el nuemero de palabras del nivel dependiendo en que nivel se encuentre.
      */
     public void aumentarPalabras(){
-        switch (nivel){
-            case 1: palabrasAMemorizar=10;
-                palabrasDelNivel=20;
-                break;
-            case 2: palabrasAMemorizar=20;
-                palabrasDelNivel=40;
-                break;
-            case 3: palabrasAMemorizar=25;
-                palabrasDelNivel=50;
-                break;
-            case 4: palabrasAMemorizar=30;
-                palabrasDelNivel=60;
-                break;
-            case 5: palabrasAMemorizar=35;
-                palabrasDelNivel=70;
-                break;
-            case 6: palabrasAMemorizar=40;
-                palabrasDelNivel=80;
-                break;
-            case 7: palabrasAMemorizar=50;
-                palabrasDelNivel=100;
-                break;
-            case 8: palabrasAMemorizar=60;
-                palabrasDelNivel=120;
-                break;
-            case 9: palabrasAMemorizar=70;
-                palabrasDelNivel=140;
-                break;
-            case 10: palabrasAMemorizar=100;
-                palabrasDelNivel=200;
-                break;
+        switch (nivel) {
+            case 1 -> {
+                palabrasAMemorizar = 10;
+                palabrasDelNivel = 20;
+            }
+            case 2 -> {
+                palabrasAMemorizar = 20;
+                palabrasDelNivel = 40;
+            }
+            case 3 -> {
+                palabrasAMemorizar = 25;
+                palabrasDelNivel = 50;
+            }
+            case 4 -> {
+                palabrasAMemorizar = 30;
+                palabrasDelNivel = 60;
+            }
+            case 5 -> {
+                palabrasAMemorizar = 35;
+                palabrasDelNivel = 70;
+            }
+            case 6 -> {
+                palabrasAMemorizar = 40;
+                palabrasDelNivel = 80;
+            }
+            case 7 -> {
+                palabrasAMemorizar = 50;
+                palabrasDelNivel = 100;
+            }
+            case 8 -> {
+                palabrasAMemorizar = 60;
+                palabrasDelNivel = 120;
+            }
+            case 9 -> {
+                palabrasAMemorizar = 70;
+                palabrasDelNivel = 140;
+            }
+            case 10 -> {
+                palabrasAMemorizar = 100;
+                palabrasDelNivel = 200;
+            }
         }
     }
 
@@ -121,14 +100,20 @@ public class Control {
         }
     }
 
+    public void sumarPuntos(Boolean aciertosDelJugador) {
+        if (aciertosDelJugador){
+            puntos++;
+        } else {
+            puntos +=0;
+        }
+    }
+
+
     /**
      * devuelve la cantidad de puntos dependiendo de los aciertos del jugador
      * @return puntos
      */
     public int getPuntos() {
-        /*if (acierto==true){
-            puntos++;
-        }*/
         return puntos;
     }
 

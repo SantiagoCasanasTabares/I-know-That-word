@@ -183,9 +183,8 @@ public class VentanaInicial extends JFrame {
                             name = JOptionPane.showInputDialog("Necesitas un nombre para contiuar: ");
                         }
 
-                        System.out.println("cy");
                             //cuando lo introduzca, escribe el nombre del jugador muestra ventana de juego y elimina ventana inicial
-                            fileManager.escribirTexto(name+":"+3);
+                            fileManager.escribirTexto(name+":"+1);
                             VentanaDejuego ventanaDejuego = new VentanaDejuego(1, name);
                             ventanaDejuego.setVisible(true);
 
@@ -196,7 +195,7 @@ public class VentanaInicial extends JFrame {
 
                 }else{//introdujo nombre, escribe el nombre del jugador muestra ventana de juego y elimina ventana inicial
 
-                    fileManager.escribirTexto(name+":"+3);
+                    fileManager.escribirTexto(name+":"+1);
                     VentanaDejuego ventanaDejuego = new VentanaDejuego(1, name);
                     ventanaDejuego.setVisible(true);
                     ventanaInicial.dispose();

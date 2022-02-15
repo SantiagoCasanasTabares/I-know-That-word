@@ -19,7 +19,6 @@ public class Diccionario {
 
     /**
      * Obtiene array de palabras aleatorias dependiendo el nivel en que vaya el usuario
-     * @param  palabrasARecordar
      * @return array de palabras aleatorias a recordar
      */
     public ArrayList<String> getPalabrasRecordar(int palabrasARecordar) {
@@ -43,11 +42,10 @@ public class Diccionario {
 
     /**
      * Obtiene array de palabras aleatorias dependiendo el nivel en que vaya el usuario
-     * @param  totalPalaNivel
      * @return array de palabras totales a decir si estaban o no
      */
     public ArrayList<String> getTotalPalabras(int totalPalaNivel) {
-        palabrasTotales = new ArrayList<String>(palabrasCorrectas);
+        palabrasTotales = new ArrayList<>(palabrasCorrectas);
         int i = palabrasTotales.size()-1;
         //entero en el tamaño de la lis ta-1 para que al sumar una arranque en la posicion que se debe poner la nueva palabra de la lista
 
