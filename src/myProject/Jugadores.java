@@ -1,5 +1,7 @@
 package myProject;
 
+import javax.naming.Name;
+
 public class Jugadores extends FileManager {
     String name;
     private int level;
@@ -8,6 +10,7 @@ public class Jugadores extends FileManager {
     public Jugadores(String name){
         fileManager = new FileManager();
         this.name = name;
+
         level = 1;
 
     }
@@ -15,17 +18,18 @@ public class Jugadores extends FileManager {
     //Retorna la posicion del usuario en el array de usuarios
     public int buscarUsuario(){
         int posicion = 0;
-        System.out.println("busca el usuario");
+        //System.out.println("busca el usuario");
         for (int i = 0; i < fileManager.jugadoreslecturaFile().size()&&fileManager.jugadoreslecturaFile().get(i).length()!=0; i++) {
-            System.out.println("busca la "+i);
-            String usuario = fileManager.jugadoreslecturaFile().get(i).substring(0, fileManager.jugadoreslecturaFile().get(i).lastIndexOf(":"));
+            //System.out.println("busca en "+i);
+            String usuario = fileManager.jugadoreslecturaFile().get(i);
             if (usuario.equals(name)){
+                System.out.println(i);
                 posicion=i;
                 break;
             }
-
         }
         return posicion;
+
     }
 
 
@@ -39,9 +43,9 @@ public class Jugadores extends FileManager {
         return Integer.valueOf (nivel);
     }
 
-    /*public void setName(String name) {
+    public void setName(String name) {
         this.name = name;
-    }*/
+    }
 
     public void setLevel() {
         this.level = getLevel();

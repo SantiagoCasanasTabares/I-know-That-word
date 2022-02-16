@@ -210,10 +210,11 @@ public class VentanaInicial extends JFrame {
                     VentanaInicial.main(null);
                 } else {
 
-                    Jugadores jugadores = new Jugadores(nombres);
+                    String name = nombres.substring(0, nombres.lastIndexOf(":"));
+                    Jugadores jugadores = new Jugadores(name);
                     int nivel = jugadores.getLevel();
 
-                    VentanaDejuego ventanaDejuego = new VentanaDejuego(nivel, jugadores.getName());
+                    VentanaDejuego ventanaDejuego = new VentanaDejuego(nivel, name);
                     ventanaDejuego.setVisible(true);
                 }
                 ventanaInicial.dispose();

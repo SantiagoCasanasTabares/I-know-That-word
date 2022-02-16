@@ -26,7 +26,6 @@ public class VentanaDejuego extends JFrame {
         initGUI();
         this.nivel = level;
         this.nombre = namePlayer;
-        //Default JFrame configuration
         this.setTitle("I know that word");
         this.pack();
         this.setResizable(false);
@@ -157,12 +156,20 @@ public class VentanaDejuego extends JFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.getSource() == iniciar) {
+
+                jugadores.setName(nombre);
+                jugadores.setLevel();
                 control.setNivel();
+                System.out.println(jugadores.getName()+", "+jugadores.getLevel());
+
+
                 control.aumentarPalabras();
                 control.setPalabrasInicial();
                 control.setPalabrasTotales();
                 timer1.start();
                 iniciar.setCursor(null);
+                JOptionPane.showMessageDialog(null, "nombre: "
+                        +jugadores.getName()+"\nnivel: "+jugadores.getLevel());
 
             }else if (e.getSource()==continuar){
                 timer2.start();
@@ -196,3 +203,4 @@ public class VentanaDejuego extends JFrame {
     }
 
 }
+
