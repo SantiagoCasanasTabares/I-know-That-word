@@ -7,9 +7,10 @@ public class Control {
     private Diccionario diccionario;
     private ArrayList<String> words, totalWords;
     private int puntos, palabrasAMemorizar,palabrasDelNivel, nivel;
-    private String palabraARecordar, palabraFinal;
     private Jugadores jugadores;
     private ArrayList<Boolean> aciertos;
+
+
     public Control(String name){
         jugadores = new Jugadores(name);
         diccionario = new Diccionario();
@@ -104,7 +105,7 @@ public class Control {
         if (aciertosDelJugador){
             puntos++;
         } else {
-            puntos +=0;
+            //puntos +=0;
         }
     }
 
