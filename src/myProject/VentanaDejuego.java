@@ -119,7 +119,7 @@ public class VentanaDejuego extends JFrame {
 
 
             if (e.getSource() == timer1) {
-                System.out.println("cy");
+                //System.out.println("cy");
                 if (i <control.getWords().size()) {
                     iniciar.setIcon(null);
                     palabra = control.getWords().get(i);
@@ -160,8 +160,6 @@ public class VentanaDejuego extends JFrame {
                 jugadores.setName(nombre);
                 jugadores.setLevel();
                 control.setNivel();
-                System.out.println(jugadores.getName()+", "+jugadores.getLevel());
-
 
                 control.aumentarPalabras();
                 control.setPalabrasInicial();
