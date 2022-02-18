@@ -29,6 +29,7 @@ public class Control {
      * @return acierto
      */
     public ArrayList<Boolean> validarPalabra(){
+        aciertos.clear();
         for (String element: totalWords){
             aciertos.add(words.contains(element));
         }
@@ -143,12 +144,16 @@ public class Control {
     }
 
     public void setPalabrasInicial() {
+        words.clear();
         words = diccionario.getPalabrasRecordar(palabrasAMemorizar);
     }
 
     public void setPalabrasTotales() {
+        totalWords.clear();
         totalWords = diccionario.getTotalPalabras(palabrasDelNivel);
     }
+
+
 
     public ArrayList<String> getWords() {
         return words;

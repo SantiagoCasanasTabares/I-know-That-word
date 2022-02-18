@@ -71,12 +71,5 @@ public class Diccionario {
         return diccionario.get(aleatorio.nextInt(diccionario.size()));
     }
 
-    public void setPalabrasCorrectas(ArrayList<String> palabrasCorrectas) {
-        this.palabrasCorrectas = palabrasCorrectas;
-    }
-
-    public void setPalabrasTotales(ArrayList<String> palabrasTotales) {
-        this.palabrasTotales = palabrasTotales;
-    }
 
 }

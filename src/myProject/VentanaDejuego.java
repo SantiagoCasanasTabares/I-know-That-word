@@ -63,6 +63,11 @@ public class VentanaDejuego extends JFrame {
         timer2 = new Timer(1000, escucha1);
         control = new Control(nombre);
 
+
+        jugadores.setLevel();
+        control.setNivel();
+
+
         //configuracion de elementos
 
         //panel palabra
@@ -185,13 +190,20 @@ public class VentanaDejuego extends JFrame {
                     iniciar.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
                     i++;
                 } else {
-                    timer1.stop();
                     i = 0;
+                    timer1.stop();
+
                     iniciar.setVisible(false);
-                    palabraPanel.remove(iniciar);
+
+                    continuar.setVisible(true);
                     continuar.addMouseListener(escucha2);
                     continuar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+                    palabraPanel.remove(iniciar);
+                    palabraPanel.repaint();
+                    palabraPanel.revalidate();
                     palabraPanel.add(continuar, BorderLayout.CENTER);
+
 
                 }
 
@@ -205,7 +217,6 @@ public class VentanaDejuego extends JFrame {
                     continuar.setText(palabra);
                     continuar.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
                     i++;
-                    System.out.println(j);
                     j++;
 
                 } else {
@@ -213,16 +224,30 @@ public class VentanaDejuego extends JFrame {
                     si.removeMouseListener(escucha2);
                     si.setCursor(null);
                     no.removeMouseListener(escucha2);
+
+                    siPanel.repaint();
+                    siPanel.revalidate();
+                    noPanel.repaint();
+                    noPanel.revalidate();
+
                     no.setCursor(null);
+                    j=0;
+                    i=0;
+
 
                     control.siguienteNivel(control.getPuntos());
                     if (control.isNextLevel()) {
-                        JOptionPane.showMessageDialog(null, "PASASTE AL SIGUIENTE NIVEL!!"
-                                                                        +"\nPresiona siguiente nivel para continuar o"
-                                                                         +"\nsalir para guardar tu progreso y salir del juego");
+                        JOptionPane.showMessageDialog(null, """
+                                PASASTE AL SIGUIENTE NIVEL!!
+                                Presiona siguiente nivel para continuar o
+                                salir para guardar tu progreso y salir del juego""");
                         nextLevel.setEnabled(true);
+                        fileManager.actualizarNivel(control.getNivel(), jugadores.buscarUsuario());
                     }else{
-                        JOptionPane.showMessageDialog(null, "Perdiste, no puedes continuar :c");
+                        JOptionPane.showMessageDialog(null, "Perdiste, pero puedes volverlo a intentar :)");
+                        fileManager.actualizarNivel(control.getNivel(), jugadores.buscarUsuario());
+                        System.exit(0);
+
                     }
                 }
             }else if (e.getSource() == ayuda) {
@@ -230,14 +255,29 @@ public class VentanaDejuego extends JFrame {
                 IconNiveles iconNiveles;
                 iconNiveles = new IconNiveles();
 
-                JOptionPane.showMessageDialog(null, MENSAJE_AYUDA, "Como jugar", JOptionPane.DEFAULT_OPTION, iconNiveles);
+                JOptionPane.showMessageDialog(null, MENSAJE_AYUDA, "Como jugar", JOptionPane.PLAIN_MESSAGE, iconNiveles);
 
             }else if (e.getSource() == exit) {
+
+                fileManager.actualizarNivel(control.getNivel(), jugadores.buscarUsuario());
+                JOptionPane.showMessageDialog(null, "Tu progreso fue guardado.");
+                System.exit(0);
 
             }else if (e.getSource() == nextLevel) {
                 nextLevel.setEnabled(false);
                 control.setNextLevel(false);
+                continuar.setVisible(false);
+                palabraPanel.remove(continuar);
 
+                palabraPanel.repaint();
+                palabraPanel.revalidate();
+
+                palabraPanel.add(iniciar);
+                iniciar.setText(null);
+                iniciar.setIcon(initOption);
+                iniciar.setVisible(true);
+                iniciar.addMouseListener(escucha2);
+                iniciar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
             }
@@ -251,16 +291,13 @@ public class VentanaDejuego extends JFrame {
             if (e.getSource() == iniciar) {
 
                 jugadores.setName(nombre);
-                jugadores.setLevel();
-                control.setNivel();
-
                 control.aumentarPalabras();
                 control.setPalabrasInicial();
                 control.setPalabrasTotales();
                 timer1.start();
                 iniciar.setCursor(null);
                 jugador.setText(jugadores.getName());
-                currentLevel.setText(String.valueOf(jugadores.getLevel()));
+                currentLevel.setText(String.valueOf(control.getNivel()));
 
             } else if (e.getSource() == continuar) {
                 timer2.start();
@@ -278,10 +315,8 @@ public class VentanaDejuego extends JFrame {
             } else if (e.getSource() == si) {
                 if (control.validarPalabra().get(j-1)) {
                     control.sumarPuntos(true);
-                    System.out.println("k pro , puntos = " + control.getPuntos());
                 } else {
                     control.sumarPuntos(false);
-                    System.out.println("k noob, puntos = " + control.getPuntos());
                 }
                 si.setEnabled(false);
                 no.setEnabled(false);
@@ -289,10 +324,8 @@ public class VentanaDejuego extends JFrame {
             } else if (e.getSource() == no) {
                 if (!control.validarPalabra().get(j-1)) {
                     control.sumarPuntos(true);
-                    System.out.println("k pro , puntos = " + control.getPuntos());
                 } else {
                     control.sumarPuntos(false);
-                    System.out.println("k noob, puntos = " + control.getPuntos());
                 }
                 si.setEnabled(false);
                 no.setEnabled(false);
