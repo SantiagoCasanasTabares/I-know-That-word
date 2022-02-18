@@ -21,9 +21,9 @@ public class Jugadores extends FileManager {
         //System.out.println("busca el usuario");
         for (int i = 0; i < fileManager.jugadoreslecturaFile().size()&&fileManager.jugadoreslecturaFile().get(i).length()!=0; i++) {
             //System.out.println("busca en "+i);
-            String usuario = fileManager.jugadoreslecturaFile().get(i);
+            String usuario = fileManager.jugadoreslecturaFile().get(i).substring(0, fileManager.jugadoreslecturaFile().get(i).lastIndexOf(":"));
             if (usuario.equals(name)){
-                System.out.println(i);
+                //System.out.println(i);
                 posicion=i;
                 break;
             }
