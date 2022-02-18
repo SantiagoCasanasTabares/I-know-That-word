@@ -10,6 +10,14 @@ import java.awt.event.*;
 
 
 public class VentanaDejuego extends JFrame {
+    public static final String MENSAJE_AYUDA= "Se te presentará una secuencia de palabras, una detrás de otra"
+            + "\ny tendrás que memorizar la mayor cantidad de estas posibles."
+            + "\nTras la serie de palabras a memorizar, el juego te presentará"
+            + "\nun listado con el doble de palabras y deberás marcar si esta "
+            + "\no no en el listado inicial, debiendo acertar un determinado "
+            + "\nnumero de palabras dependiendo el nivel.";
+
+
     private ImageIcon initOption, continueOption, yesOption, noOption;
     private JLabel iniciar, continuar, si, no;
     private JPanel palabraPanel, siPanel, noPanel, infoPanel;
@@ -19,7 +27,9 @@ public class VentanaDejuego extends JFrame {
     private Escucha escucha1, escucha2;
     private Jugadores jugadores;
     private Control control;
-
+    String palabra = "";
+    int i = 0;
+    int j = 0;
     int nivel;
     String nombre;
     FileManager fileManager;
@@ -50,7 +60,7 @@ public class VentanaDejuego extends JFrame {
         escucha1 = new Escucha();
         escucha2 = new Escucha();
         timer1 = new Timer(500, escucha1);
-        timer2 = new Timer(800, escucha1);
+        timer2 = new Timer(1000, escucha1);
         control = new Control(nombre);
 
         //configuracion de elementos
@@ -161,9 +171,7 @@ public class VentanaDejuego extends JFrame {
     }
 
     private class Escucha extends MouseAdapter implements ActionListener {
-        String palabra = "";
-        int i = 0;
-        int j = 0;
+
 
 
         @Override
@@ -189,28 +197,49 @@ public class VentanaDejuego extends JFrame {
 
             } else if (e.getSource() == timer2) {
 
+                si.setEnabled(true);
+                no.setEnabled(true);
 
                 if (i < control.getTotalWords().size()) {
-
-                    si.addMouseListener(escucha2);
-                    si.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                    no.addMouseListener(escucha2);
-                    no.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-
                     palabra = control.getTotalWords().get(i);
                     continuar.setText(palabra);
                     continuar.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-                    control.sumarPuntos(false);
                     i++;
+                    System.out.println(j);
                     j++;
+
                 } else {
                     timer2.stop();
                     si.removeMouseListener(escucha2);
                     si.setCursor(null);
                     no.removeMouseListener(escucha2);
                     no.setCursor(null);
+
+                    control.siguienteNivel(control.getPuntos());
+                    if (control.isNextLevel()) {
+                        JOptionPane.showMessageDialog(null, "PASASTE AL SIGUIENTE NIVEL!!"
+                                                                        +"\nPresiona siguiente nivel para continuar o"
+                                                                         +"\nsalir para guardar tu progreso y salir del juego");
+                        nextLevel.setEnabled(true);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Perdiste, no puedes continuar :c");
+                    }
                 }
+            }else if (e.getSource() == ayuda) {
+
+                IconNiveles iconNiveles;
+                iconNiveles = new IconNiveles();
+
+                JOptionPane.showMessageDialog(null, MENSAJE_AYUDA, "Como jugar", JOptionPane.DEFAULT_OPTION, iconNiveles);
+
+            }else if (e.getSource() == exit) {
+
+            }else if (e.getSource() == nextLevel) {
+                nextLevel.setEnabled(false);
+                control.setNextLevel(false);
+
+
+
             }
         }
 
@@ -235,38 +264,38 @@ public class VentanaDejuego extends JFrame {
 
             } else if (e.getSource() == continuar) {
                 timer2.start();
+                si.addMouseListener(escucha2);
+                no.addMouseListener(escucha2);
+
+
+                si.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                no.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 continuar.setIcon(null);
                 continuar.setCursor(null);
 
                 System.out.println(control.validarPalabra());
 
             } else if (e.getSource() == si) {
-                if (control.validarPalabra().get(j)) {
+                if (control.validarPalabra().get(j-1)) {
                     control.sumarPuntos(true);
                     System.out.println("k pro , puntos = " + control.getPuntos());
                 } else {
                     control.sumarPuntos(false);
                     System.out.println("k noob, puntos = " + control.getPuntos());
                 }
-
-                si.removeMouseListener(escucha2);
-                si.setCursor(null);
-                no.removeMouseListener(escucha2);
-                no.setCursor(null);
+                si.setEnabled(false);
+                no.setEnabled(false);
 
             } else if (e.getSource() == no) {
-                if (!control.validarPalabra().get(j)) {
-                    System.out.println(j);
+                if (!control.validarPalabra().get(j-1)) {
                     control.sumarPuntos(true);
                     System.out.println("k pro , puntos = " + control.getPuntos());
                 } else {
                     control.sumarPuntos(false);
                     System.out.println("k noob, puntos = " + control.getPuntos());
                 }
-                si.removeMouseListener(escucha2);
-                si.setCursor(null);
-                no.removeMouseListener(escucha2);
-                no.setCursor(null);
+                si.setEnabled(false);
+                no.setEnabled(false);
 
             }
         }

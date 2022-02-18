@@ -9,6 +9,7 @@ public class Control {
     private int puntos, palabrasAMemorizar,palabrasDelNivel, nivel;
     private Jugadores jugadores;
     private ArrayList<Boolean> aciertos;
+    private boolean nextLevel;
 
 
     public Control(String name){
@@ -19,6 +20,7 @@ public class Control {
         words = new ArrayList<String>();
         totalWords = new ArrayList<String>();
         aciertos = new ArrayList<Boolean>();
+        nextLevel = false;
     }
 
 
@@ -85,20 +87,42 @@ public class Control {
     /**
      *
      */
-    public void siguienteNivel(){
-        if((nivel==1 || nivel==2) && getPuntos()==(palabrasDelNivel*0.7)){
+    public void siguienteNivel(int aciertosDeLaRonda){
+        if((nivel==1 || nivel==2) && aciertosDeLaRonda>=(palabrasDelNivel*0.7)){
             nivel++;
-        }else if(nivel==3 && getPuntos()==Math.round(palabrasDelNivel*0.75)){
+            puntos=0;
+            nextLevel = true;
+        }else if(nivel==3 && aciertosDeLaRonda>=Math.round(palabrasDelNivel*0.75)){
             nivel++;
-        }else if((nivel==4 || nivel==5) && getPuntos()==(palabrasDelNivel*0.8)){
+            puntos=0;
+            nextLevel = true;
+        }else if((nivel==4 || nivel==5) && aciertosDeLaRonda>=(palabrasDelNivel*0.8)){
             nivel++;
-        }else if(nivel==6 && getPuntos()==(palabrasDelNivel*0.85)){
+            puntos=0;
+            nextLevel = true;
+        }else if(nivel==6 && aciertosDeLaRonda>=(palabrasDelNivel*0.85)){
             nivel++;
-        }else if((nivel==7 && nivel==8) && getPuntos()==(palabrasDelNivel*0.9)){
+            puntos=0;
+            nextLevel = true;
+        }else if((nivel==7 && nivel==8) && aciertosDeLaRonda>=(palabrasDelNivel*0.9)){
             nivel++;
-        }else if(nivel==9 && getPuntos()==(palabrasDelNivel*0.95)){
+            puntos=0;
+            nextLevel = true;
+        }else if(nivel==9 && aciertosDeLaRonda>=(palabrasDelNivel*0.95)){
             nivel++;
+            puntos=0;
+            nextLevel = true;
+        }else if(nivel==10 && aciertosDeLaRonda>=(palabrasDelNivel*1)){
+            nextLevel = true;
         }
+    }
+
+    public boolean isNextLevel() {
+        return nextLevel;
+    }
+
+    public void setNextLevel(boolean nextLevel) {
+        this.nextLevel = nextLevel;
     }
 
     public void sumarPuntos(Boolean aciertosDelJugador) {
