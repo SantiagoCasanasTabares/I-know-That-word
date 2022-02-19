@@ -3,6 +3,12 @@ package myProject;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * @autor Santiago Casañas Tabares 2025301 - Jesus Adrian Peña Güetio 2025513
+ * santiago.casanas@correounivalle.edu.co - jesus.guetio@correounivalle.edu.co
+ * @version v.1.0.0 date:18/02/2022
+ */
+
 public class FileManager {
     public static final String PATHPALABRAS = "src/myProject/files/diccionario.txt";
     public static final String PATHJUGADORES = "src/myProject/files/jugadores.txt";
@@ -12,7 +18,10 @@ public class FileManager {
     private BufferedWriter output;
 
 
-    //obtener array con las palabras
+    /**
+     * reads the text file of words and group them into an array
+     * @return array of the words in the text file
+     */
     public ArrayList<String> lecturaFile() {
         ArrayList<String> frases = new ArrayList<String>();
 
@@ -39,7 +48,10 @@ public class FileManager {
     }
 
 
-    //escribir los nombres de los jugadores
+    /**
+     * Write the name players in the text file
+     * @param linea
+     */
     public void escribirTexto(String linea){
         try {
             fileWriter = new FileWriter(PATHJUGADORES,true);
@@ -58,7 +70,10 @@ public class FileManager {
     }
 
 
-    //obtener array con lo jugadores
+    /**
+     * reads the text file of players and group them into an array
+     * @return array of the words in the text file
+     */
     public ArrayList<String> jugadoreslecturaFile() {
         ArrayList<String> jugadores = new ArrayList<String>();
 
@@ -84,7 +99,11 @@ public class FileManager {
         return jugadores;
     }
 
-    //modificar array de jugadores para poner el nuevo nivel a un usuario determinado
+    /**
+     * modify array of players to set the new level to a given user
+     * @param nivel
+     * @param posicion
+     */
     public void actualizarNivel( int nivel, int posicion){
         try {
             ArrayList<String> jugadoresActulizar = jugadoreslecturaFile();

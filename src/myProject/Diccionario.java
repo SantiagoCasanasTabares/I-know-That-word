@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+/**
+ * @autor Santiago Casañas Tabares 2025301 - Jesus Adrian Peña Güetio 2025513
+ * santiago.casanas@correounivalle.edu.co - jesus.guetio@correounivalle.edu.co
+ * @version v.1.0.0 date:18/02/2022
+ */
+
 public class Diccionario {
 
     private ArrayList<String> diccionario;
@@ -18,8 +24,8 @@ public class Diccionario {
     }
 
     /**
-     * Obtiene array de palabras aleatorias dependiendo el nivel en que vaya el usuario
-     * @return array de palabras aleatorias a recordar
+     * Gets array of random words depending on the user's level of knowledge
+     * @return array of random words to remember
      */
     public ArrayList<String> getPalabrasRecordar(int palabrasARecordar) {
         int i = -1;
@@ -41,8 +47,8 @@ public class Diccionario {
 
 
     /**
-     * Obtiene array de palabras aleatorias dependiendo el nivel en que vaya el usuario
-     * @return array de palabras totales a decir si estaban o no
+     * Gets array of random words depending on the user's level of knowledge
+     * @return array of total words to tell if they were there or not
      */
     public ArrayList<String> getTotalPalabras(int totalPalaNivel) {
         palabrasTotales = new ArrayList<>(palabrasCorrectas);
@@ -63,8 +69,8 @@ public class Diccionario {
     }
 
     /**
-     * obtiene una palabra aleatoria del diccionario.txt
-     * @return palabra
+     * gets a random word from dictionary.txt
+     * @return word
      */
     public String getFrase() {
         Random aleatorio = new Random();
