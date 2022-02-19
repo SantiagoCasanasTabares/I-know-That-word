@@ -2,7 +2,12 @@ package myProject;
 
 import java.util.ArrayList;
 
-
+/**
+ * Esta clase es usada para manejar toda la logica del juego
+ * @author Santiago Casañas - santiago.casanas@correounivalle.edu.co
+ * @author Jesus Adrian Peña - jesus.guetio@correounivalle.edu.co
+ * @version v.1.0.0 date:18/02/2022
+ */
 public class Control {
     private Diccionario diccionario;
     private ArrayList<String> words, totalWords;
@@ -12,6 +17,10 @@ public class Control {
     private boolean nextLevel;
 
 
+    /**
+     * class constructor
+     * @param name
+     */
     public Control(String name){
         jugadores = new Jugadores(name);
         diccionario = new Diccionario();
@@ -25,8 +34,9 @@ public class Control {
 
 
     /**
-     * compara una palabra de las palabras totales del nivel con alguna de las palabras a recordar, para verificar si acerto o no.
-     * @return acierto
+     * Compares the words to be memorized by the user with the total words of the level,
+     * and stores in a list the resulting Booleans
+     * @return hits
      */
     public ArrayList<Boolean> validarPalabra(){
         aciertos.clear();
@@ -38,7 +48,7 @@ public class Control {
 
 
     /**
-     * Aumenta el numero de palabras a recordar y el nuemero de palabras del nivel dependiendo en que nivel se encuentre.
+     * Increases the number of words to remember and the total number of words in the level depending on which level you are in.
      */
     public void aumentarPalabras(){
         switch (nivel) {
@@ -86,8 +96,10 @@ public class Control {
     }
 
     /**
-     *
+     * Increases the player's level depending on the number of hits he/she had
+     * @param aciertosDeLaRonda
      */
+
     public void siguienteNivel(int aciertosDeLaRonda){
         if((nivel==1 || nivel==2) && aciertosDeLaRonda>=(palabrasDelNivel*0.7)){
             nivel++;
@@ -118,55 +130,84 @@ public class Control {
         }
     }
 
+    /**
+     * returns a boolean to know if the player passed a level.
+     * @return nextLevel
+     */
     public boolean isNextLevel() {
         return nextLevel;
     }
 
+    /**
+     * establece un valor a nextLevel
+     * @param nextLevel
+     */
     public void setNextLevel(boolean nextLevel) {
         this.nextLevel = nextLevel;
     }
 
+    /**
+     * sets a value to nextLevel
+     * @param aciertosDelJugador
+     */
     public void sumarPuntos(Boolean aciertosDelJugador) {
         if (aciertosDelJugador){
             puntos++;
-        } else {
-            //puntos +=0;
         }
     }
 
 
     /**
-     * devuelve la cantidad de puntos dependiendo de los aciertos del jugador
-     * @return puntos
+     * returns the number of hits of the player
+     * @return points
      */
     public int getPuntos() {
         return puntos;
     }
 
+    /**
+     * Sets the initial words to remember
+     */
     public void setPalabrasInicial() {
         words.clear();
         words = diccionario.getPalabrasRecordar(palabrasAMemorizar);
     }
 
+    /**
+     * Sets the total words
+     */
     public void setPalabrasTotales() {
         totalWords.clear();
         totalWords = diccionario.getTotalPalabras(palabrasDelNivel);
     }
 
-
-
+    /**
+     * returns a list of words to be remembered
+     * @return words
+     */
     public ArrayList<String> getWords() {
         return words;
     }
 
+    /**
+     * Returns a list with the total word list
+     * @return
+     */
     public ArrayList<String> getTotalWords() {
         return totalWords;
     }
 
+    /**
+     * sets the player's level
+     */
     public void setNivel() {
         this.nivel = jugadores.getLevel();
     }
 
+    /**
+     * Returns the player's level
+     * @return nivel
+     */
     public int getNivel() {
         return nivel;
     }

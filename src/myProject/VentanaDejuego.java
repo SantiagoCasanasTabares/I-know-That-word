@@ -7,7 +7,11 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
 
-
+/**
+ * @autor Santiago Casañas Tabares 2025301 - Jesus Adrian Peña Güetio 2025513
+ * santiago.casanas@correounivalle.edu.co - jesus.guetio@correounivalle.edu.co
+ * @version v.1.0.0 date:18/02/2022
+ */
 
 public class VentanaDejuego extends JFrame {
     public static final String MENSAJE_AYUDA= "Se te presentará una secuencia de palabras, una detrás de otra"
@@ -34,6 +38,11 @@ public class VentanaDejuego extends JFrame {
     String nombre;
     FileManager fileManager;
 
+    /**
+     * class constructor
+     * @param level
+     * @param namePlayer
+     */
     public VentanaDejuego(int level, String namePlayer) {
         initGUI();
         this.nivel = level;
@@ -47,30 +56,38 @@ public class VentanaDejuego extends JFrame {
     }
 
     private void initGUI() {
-        //Set up JFrame Container's Layout
+        /**
+         * Set up JFrame Container's Layout
+         */
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
-        //color jframe
+        /**
+         * set the color of the panel
+         */
         this.getContentPane().setBackground(new Color(192,255,240));
 
-        //escucha and control class
+        /**
+         * Create Listener Object and Control Object
+         */
         fileManager = new FileManager();
         jugadores = new Jugadores(nombre);
         escucha1 = new Escucha();
         escucha2 = new Escucha();
-        timer1 = new Timer(500, escucha1);
-        timer2 = new Timer(1000, escucha1);
+        timer1 = new Timer(5000, escucha1);
+        timer2 = new Timer(7000, escucha1);
         control = new Control(nombre);
-
-
         jugadores.setLevel();
         control.setNivel();
 
 
-        //configuracion de elementos
+        /**
+         * set up components -------------------------------------------------------------------------------------------
+         */
 
-        //panel palabra
+        /**
+         * palabra Jpanel
+         */
         palabraPanel = new JPanel();
         initOption = new ImageIcon(getClass().getResource("/Resources/iniciar.png"));
         iniciar = new JLabel(initOption);
@@ -88,7 +105,9 @@ public class VentanaDejuego extends JFrame {
         constraints.gridheight = 1;
         add(palabraPanel, constraints);
 
-        //panel si
+        /**
+         * si Jpanel
+         */
         siPanel = new JPanel();
         yesOption = new ImageIcon(getClass().getResource("/Resources/si.png"));
         si = new JLabel(yesOption);
@@ -104,7 +123,9 @@ public class VentanaDejuego extends JFrame {
         constraints.gridheight = 1;
         add(siPanel, constraints);
 
-        //panel no
+        /**
+         * no Jpanel
+         */
         noPanel = new JPanel();
         noOption = new ImageIcon(getClass().getResource("/Resources/no.png"));
         no = new JLabel(noOption);
@@ -120,12 +141,22 @@ public class VentanaDejuego extends JFrame {
         constraints.gridheight = 1;
         add(noPanel, constraints);
 
-        //botones
-        //exit
+        /**
+         * Buttons------------------------------------------------------------------------------------------------------
+         */
+
+
+        /**
+         * exit button
+         */
         exit = new JButton("Salir");
         exit.addActionListener(escucha1);
         exit.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        //ayuda
+
+
+        /**
+         * help button
+         */
         ayuda = new JButton("Ayuda");
         ayuda.addActionListener(escucha1);
         ayuda.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -135,19 +166,29 @@ public class VentanaDejuego extends JFrame {
         nextLevel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         nextLevel.setEnabled(false);
 
-        //JTextArea
-        //nombre del jugador
+        /**
+         * JText Area --------------------------------------------------------------------------------------------------
+         */
+
+        /**
+         * name player
+         */
         jugador = new JTextArea();
         jugador.setPreferredSize(new Dimension(100, 20));
         jugador.setText("Player  id");
         jugador.setEditable(false);
-        //nivel del jugador
+
+        /**
+         * users level
+         */
         currentLevel = new JTextArea();
         currentLevel.setPreferredSize(new Dimension(100, 20));
         currentLevel.setText("Nivel actual");
         currentLevel.setEditable(false);
 
-        //infoPanel
+        /**
+         * info Jpanel
+         */
         infoPanel = new JPanel();
         infoPanel.setPreferredSize(new Dimension(130, 230));
         infoPanel.add(jugador);
@@ -166,18 +207,19 @@ public class VentanaDejuego extends JFrame {
         add(infoPanel, constraints);
 
 
-
-
-
-        //continue Option
+        /**
+         * continue Option
+         */
         continueOption = new ImageIcon(getClass().getResource("/Resources/continuar.png"));
         continuar = new JLabel(continueOption);
 
     }
 
+
+    /**
+     * inner class that extends an Adapter Class or implements Listeners used by GUI class
+     */
     private class Escucha extends MouseAdapter implements ActionListener {
-
-
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -285,7 +327,6 @@ public class VentanaDejuego extends JFrame {
 
 
 
-
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.getSource() == iniciar) {
@@ -310,8 +351,6 @@ public class VentanaDejuego extends JFrame {
                 continuar.setIcon(null);
                 continuar.setCursor(null);
 
-                System.out.println(control.validarPalabra());
-
             } else if (e.getSource() == si) {
                 if (control.validarPalabra().get(j-1)) {
                     control.sumarPuntos(true);
@@ -332,8 +371,6 @@ public class VentanaDejuego extends JFrame {
 
             }
         }
-
     }
-
 }
 

@@ -9,9 +9,9 @@ import java.awt.event.ActionListener;
 
 
 /**
- * This class is used for ...
- * @autor Paola-J Rodriguez-C paola.rodriguez@correounivalle.edu.co
- * @version v.1.0.0 date:21/11/2021
+ * @autor Santiago Casañas Tabares 2025301 - Jesus Adrian Peña Güetio 2025513
+ * santiago.casanas@correounivalle.edu.co - jesus.guetio@correounivalle.edu.co
+ * @version v.1.0.0 date:18/02/2022
  */
 public class VentanaInicial extends JFrame {
 
@@ -57,18 +57,26 @@ public class VentanaInicial extends JFrame {
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
-        //Create Listener Object and Control Object
+        /**
+         * Create Listener Object and Control Object
+         */
         escucha = new Escucha();
         fileManager = new FileManager();
 
 
-
-
-        //color Jframe
+        /**
+         * set the color of the panel
+         */
         this.getContentPane().setBackground(new Color(192,255,240));
-        //Set up JComponents
 
-        //titulo
+
+        /**
+         * set up components -------------------------------------------------------------------------------------------
+         */
+
+        /**
+         * tittle
+         */
         titulo = new ImageIcon(getClass().getResource("/Resources/tittle.png"));
         imagentitulo = new JLabel(titulo);
         imagentitulo.setBorder(new EmptyBorder(0, 20, 20, 0));
@@ -78,7 +86,9 @@ public class VentanaInicial extends JFrame {
         this.add(imagentitulo, constraints);
 
 
-        //boton nuevo juego
+        /**
+         * new game button
+         */
         nuevoJuego = new JButton("Nuevo juego");
         nuevoJuego.addActionListener(escucha);
         nuevoJuego.setPreferredSize(new Dimension(110, 30));
@@ -92,7 +102,9 @@ public class VentanaInicial extends JFrame {
         add(nuevoJuego, constraints);
 
 
-        //boton continuar
+        /**
+         * continue game button
+         */
         continuarjuego = new JButton("Continuar");
         continuarjuego.addActionListener(escucha);
         continuarjuego.setPreferredSize(new Dimension(110, 30));
@@ -111,7 +123,9 @@ public class VentanaInicial extends JFrame {
         add(continuarjuego, constraints);
 
 
-        //boton como jugar
+        /**
+         * help button
+         */
         comoJugar = new JButton("Como jugar");
         comoJugar.addActionListener(escucha);
         comoJugar.setPreferredSize(new Dimension(110, 30));
@@ -125,8 +139,9 @@ public class VentanaInicial extends JFrame {
         add(comoJugar, constraints);
 
 
-
-        //boton salir
+        /**
+         * exit button
+         */
         salir = new JButton("salir");
         salir.addActionListener(escucha);
         salir.setPreferredSize(new Dimension(110, 30));
@@ -181,8 +196,10 @@ public class VentanaInicial extends JFrame {
                             name = JOptionPane.showInputDialog("Necesitas un nombre para contiuar: ");
                         }
 
-                            //cuando lo introduzca, escribe el nombre del jugador muestra ventana de juego y elimina ventana inicial
-                            fileManager.escribirTexto(name+":"+1);
+                        /**
+                         * cuando lo introduzca, escribe el nombre del jugador muestra ventana de juego y elimina ventana inicial
+                         */
+                        fileManager.escribirTexto(name+":"+1);
                             VentanaDejuego ventanaDejuego = new VentanaDejuego(1, name);
                             ventanaDejuego.setVisible(true);
 
